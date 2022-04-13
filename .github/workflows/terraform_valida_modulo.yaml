@@ -1,0 +1,51 @@
+name: "Terraform Valida Modulo"
+
+on:
+  workflow_call:
+    inputs:
+      tf_version:
+        description: "Versão do terraform"
+        required: true
+        type: string
+        default: '1.0.0'
+      os_version:
+        description: "Versão do sistema operacional"
+        required: true
+        default: "ubuntu-20.04"
+        type: string
+    secrets:
+      token:
+        required: true
+
+jobs:
+  jobs_terraform:
+    name: Terraform workflow
+    runs-on: ${{ inputs.os_version }}
+    continue-on-error: ${{ inputs.command_continue_on_error }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ inputs.tf_version }}
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Validação do tfsec
+        id: tfsec
+        run: |
+          docker run --rm -v $PWD:/app -w /app tfsec/tfsec .
