@@ -5,12 +5,12 @@ on:
     inputs:
       tf_version:
         description: "Versão do terraform"
-        required: true
+        required: false
         type: string
         default: '1.0.0'
       os_version:
         description: "Versão do sistema operacional"
-        required: true
+        required: false
         default: "ubuntu-20.04"
         type: string
     secrets:
