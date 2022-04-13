@@ -2,3 +2,4 @@
 Repositório para pipelines reutilizáveis do Github Actions
 
 ### Objetivo
+
