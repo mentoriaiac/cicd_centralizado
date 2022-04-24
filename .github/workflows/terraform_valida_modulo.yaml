@@ -21,7 +21,6 @@ jobs:
   jobs_terraform:
     name: Terraform workflow
     runs-on: ${{ inputs.os_version }}
-    continue-on-error: true
 
     steps:
       - name: Checkout
