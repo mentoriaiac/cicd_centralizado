@@ -18,7 +18,7 @@ on:
         description: "Versão do molecule os"
         required: false
         type: string
-        default: [ubuntu1804, ubuntu2004]
+        default: ubuntu2004
     secrets:
       token:
         required: true
