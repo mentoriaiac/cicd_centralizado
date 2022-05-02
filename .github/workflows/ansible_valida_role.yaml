@@ -12,13 +12,8 @@ on:
       os_version:
         description: "Versão do sistema operacional"
         required: false
-        default: "ubuntu-20.04"
-        type: string
-      molecule_distro:
-        description: "Versão do molecule os"
-        required: false
-        type: string
-        default: ubuntu2004
+        default: "ubuntu-20.04" #verificar uma forma de criar uma lista#
+        type: string    
     secrets:
       token:
         required: true
@@ -41,6 +36,9 @@ jobs:
 
   molecule:
     runs-on: ${{ inputs.os_version }}
+    strategy:
+      matrix:
+        molecule_distro: [ubuntu1804, ubuntu2004]
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ inputs.python_version }}
@@ -65,4 +63,4 @@ jobs:
           # Mudar a cor de mensagens de debug para aparecer melhor no fundo
           # escuro dos logs do GitHub Action.
           ANSIBLE_COLOR_DEBUG: "bright gray"
-          MOLECULE_DISTRO: ${{ inputs.molecule_distro }}
+          MOLECULE_DISTRO: ${{ matrix.molecule_distro }}
