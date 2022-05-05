@@ -25,7 +25,7 @@ on:
   pull_request:
 jobs:
   my_first_job:
-    uses: "entoriaiac/cicd_centralizado/.github/workflows/ansible_valida_role.yaml@v1"
+    uses: "mentoriaiac/cicd_centralizado/.github/workflows/ansible_valida_role.yaml@v1"
     secrets:
       token: ${{ secrets.TOKEN }}
 ```

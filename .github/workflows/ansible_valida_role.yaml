@@ -1,5 +1,5 @@
 ---
-name: CI
+name: "Valida Roles Ansible"
 
 on:
   workflow_call:
@@ -12,7 +12,7 @@ on:
       os_version:
         description: "Versão do sistema operacional"
         required: false
-        default: "ubuntu-20.04" #verificar uma forma de criar uma lista#
+        default: "ubuntu-20.04"
         type: string    
     secrets:
       token:
