@@ -1,0 +1,15 @@
+name: Keep the versions up-to-date
+
+on:
+  release:
+    types: [published, edited]
+
+jobs:
+  actions-tagger:
+    name: "Aplicando a major version e latest tag"
+    runs-on: "ubuntu-20.04"
+    steps:
+      - uses: Actions-R-Us/actions-tagger@latest
+        with:
+          publish_latest_tag: true
+          token: ${{ secrets.TOKEN }}
