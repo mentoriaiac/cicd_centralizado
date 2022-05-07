@@ -1,4 +1,4 @@
-name: Keep the versions up-to-date
+name: Criar tags major e latest para cada release
 
 on:
   release:
