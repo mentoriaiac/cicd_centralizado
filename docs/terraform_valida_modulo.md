@@ -31,7 +31,7 @@ on:
 
 jobs:
   terraform:
-      uses: "mentoriaiac/cicd_centralizado/.github/workflows/terraform_valida_modulo.yaml@v0.1.0"
+      uses: "mentoriaiac/cicd_centralizado/.github/workflows/terraform_valida_modulo.yaml@v1"
       with: 
         tf_version: "1.0.0"
         os_version: "ubuntu-20.04"
