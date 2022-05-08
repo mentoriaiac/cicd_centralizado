@@ -12,3 +12,4 @@ jobs:
       - uses: Actions-R-Us/actions-tagger@latest
         with:
           publish_latest_tag: true
+          token: ${{ secrets.TOKEN }}
