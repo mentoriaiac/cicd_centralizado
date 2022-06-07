@@ -24,7 +24,7 @@ on:
       - opened
 jobs:
   add-issue:
-    uses: "mentoriaiac/cicd_centralizado/.github/workflows/add-issues-projects.yaml@v1"
+    uses: "mentoriaiac/cicd_centralizado/.github/workflows/add_issues_projects.yaml@v1"
     with:
       project-url: https://github.com/orgs/mentoriaiac/projects/6
       github_token: ${{ secrets.ADD_TO_PROJECT_PAT }}
