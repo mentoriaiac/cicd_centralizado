@@ -1,0 +1,23 @@
+name: "Adiciona Issues em Projects GitHub"
+
+on:
+  workflow_call:
+    inputs:
+      project_url:
+        description: "URL do projetcs github"
+        required: true
+        type: string
+      github_token:
+        description: "Personal token para leitura/escrita projects github"
+        required: true
+        type: string
+
+jobs:
+  add-to-project:
+    name: Add issue to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@main
+        with:
+          project-url: {{ inputs.project_url }}
+          github-token: ${{ inputs.github_token }}
