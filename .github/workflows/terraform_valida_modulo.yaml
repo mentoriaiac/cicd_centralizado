@@ -3,11 +3,6 @@ name: "Terraform Valida Modulo"
 on:
   workflow_call:
     inputs:
-      tf_version:
-        description: "Versão do terraform"
-        required: false
-        type: string
-        default: '1.0.0'
       os_version:
         description: "Versão do sistema operacional"
         required: false
@@ -26,10 +21,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Teste
+        run: | 
+         export TF_VERSION=$(sed -n '/required_version/p' *.tf | awk '{print $4}' | sed 's/"//g')
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: ${{ inputs.tf_version }}
+          terraform_version: $TF_VERSION
 
       - name: Terraform Format
         id: fmt
