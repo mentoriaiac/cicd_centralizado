@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Teste
+      - name: Prepara variavel
         run: | 
          export TF_VERSION=$(sed -n '/required_version/p' *.tf | awk '{print $4}' | sed 's/"//g')
       - name: Setup Terraform

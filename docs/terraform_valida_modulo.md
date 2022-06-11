@@ -9,7 +9,6 @@ Github Actions para ser reutilizado nos projetos de Terraform. Faz a validação
 ## Inputs
 | Nome | Descrição | Requirida |Default |
 |------|-----------|-----------|--------|
-|`tf_version` | Versão do terraform | não | 1.0.0 |
 |`os_version` | Versão do sistema operacional | não | ubuntu-20.04 |
 
 
@@ -33,7 +32,6 @@ jobs:
   terraform:
       uses: "mentoriaiac/cicd_centralizado/.github/workflows/terraform_valida_modulo.yaml@v1"
       with: 
-        tf_version: "1.0.0"
         os_version: "ubuntu-20.04"
       secrets:
         token: ${{ secrets.TOKEN }}
