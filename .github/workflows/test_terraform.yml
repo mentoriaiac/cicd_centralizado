@@ -1,0 +1,22 @@
+name: Testes para pipeline Terraform
+
+on:
+  push:
+
+jobs:
+  test-terraform-required-version-001:
+    uses: "./.github/workflows/terraform_valida_modulo.yaml"
+    with:
+      working_directory: tests/terraform/test-required-version/test-001
+  test-terraform-required-version-002:
+    uses: "./.github/workflows/terraform_valida_modulo.yaml"
+    with:
+      working_directory: tests/terraform/test-required-version/test-002
+  test-terraform-required-version-003:
+    uses: "./.github/workflows/terraform_valida_modulo.yaml"
+    with:
+      working_directory: tests/terraform/test-required-version/test-003
+  test-terraform-required-version-004:
+    uses: "./.github/workflows/terraform_valida_modulo.yaml"
+    with:
+      working_directory: tests/terraform/test-required-version/test-004
