@@ -1,6 +1,16 @@
 # Ansible Valida Role
 Use esta actions para adicionar automaticamente as issues a um projeto do GitHub. Observe que isso é para projetos do GitHub (beta), não para os projetos originais do GitHub.
 
+## Criar usuário e token
+Os tokens de acesso pessoal (PATs) é uma forma de concedendo permissão de acesso para API do GitHub e linha de comando.
+
+> Para saber mais acesse: [Token de acesso GitHub](https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+
+Para esse projeto é necessário criar um token com as seguintes permissões de acesso: 
+
+![Imagem](./img/token-github.png)
+  
+
 ## Inputs
 | Nome | Descrição | Requirida |Default |
 |------|-----------|-----------|--------|
