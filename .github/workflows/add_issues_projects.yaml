@@ -17,7 +17,7 @@ jobs:
     name: Add issue to project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@v0
+      - uses: actions/add-to-project@main
         with:
           project-url: {{ inputs.project_url }}
           github-token: ${{ inputs.github_token }}
