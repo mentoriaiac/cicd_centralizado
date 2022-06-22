@@ -47,7 +47,7 @@ on:
 jobs:
   build:
     name: Build da imagem
-    runs-on: ${{ input.OS_VERSION }}
+    runs-on: ${{ inputs.OS_VERSION }}
     outputs:
       image:  ${{ steps.build_push_imagem.outputs.image }}
     steps:
