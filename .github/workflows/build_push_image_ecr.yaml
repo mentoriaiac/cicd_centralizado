@@ -62,7 +62,7 @@ jobs:
       - name: Build, Tag e Push da imagem para repositório AWS ECR
         id: build_push_imagem
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REGISTRY: ${{ steps.build_push_imagem.outputs.registry }}
         run: |
           cd ${{ inputs.WORK_DIR }}
           if [ -z ${{ inputs.TAG_IMAGE }} ] #Verifica se a var TAG-IMAGE é nula
