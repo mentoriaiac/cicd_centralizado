@@ -23,7 +23,7 @@ on:
         required: false
         type: string
         default: "."
-      ECR:
+      ECR_REPOSITORY:
         description: "Nome do repositório ECR"
         required: true
         type: string
