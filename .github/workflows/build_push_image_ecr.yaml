@@ -1,0 +1,77 @@
+name: Build e Push de imagens docker para escuro
+
+on: 
+  workflow_call:
+    outputs:
+      value: 
+        value: ${{ jobs.build.outputs.imagem }}
+        description: "URL da imagem da imagem docker"
+    
+    inputs:
+      OS_VERSION:
+        description: "Versão do sistema operacional"
+        required: false
+        default: "ubuntu-20.04"
+        type: string 
+      TAG_IMAGE:
+        description: "Tag da imagem docker, se vazia será utilizado 8 dígitos do sha do commit"
+        required: false
+        type: string
+        default: ""
+      WORK_DIR:
+        description: "Diretório do projeto"
+        required: false
+        type: string
+        default: "."
+      ECR:
+        description: "Nome do repositório ECR"
+        required: true
+        type: string
+      AWS_REGION:
+        description: "Região AWS"
+        required: false
+        default: us-east-1
+        type: string
+      DOCKERFILE:
+        description: "Path do arquivo dockerfile"
+        required: false
+        type: string
+        default: "./Dockerfile"
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        description: "AWS access key id"
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        description: "AWS secrets access key"
+        required: true
+jobs:
+  build:
+    name: Build da imagem
+    runs-on: ${{ input.OS_VERSION }}
+    outputs:
+      image:  ${{ steps.build_push_imagem.outputs.image }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configura credenciais da AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ inputs.AWS_REGION }}
+      
+      - name: Build, Tag e Push da imagem para repositório AWS ECR
+        id: build_push_imagem
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          cd ${{ inputs.WORK_DIR }}
+          if [ -z ${{ inputs.TAG_IMAGE }} ] #Verifica se a var TAG-IMAGE é nula
+          then
+            docker build -t $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${GITHUB_SHA::8} -f ${{ inputs.DOCKERFILE }}
+            docker push $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${GITHUB_SHA::8}
+            echo "::set-output name=imagem::$ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${GITHUB_SHA::8}"
+          else
+            docker build -t $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} -f ${{ inputs.DOCKERFILE }}
+            docker push $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
+            echo "::set-output name=imagem::$ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}"
+          fi
