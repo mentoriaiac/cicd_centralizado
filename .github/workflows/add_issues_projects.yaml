@@ -7,10 +7,10 @@ on:
         description: "URL do projetcs github"
         required: true
         type: string
+    secrets:
       github_token:
         description: "Personal token para leitura/escrita projects github"
         required: true
-        type: string
 
 jobs:
   add-to-project:
