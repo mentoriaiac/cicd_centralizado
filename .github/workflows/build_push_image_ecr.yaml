@@ -49,9 +49,11 @@ jobs:
     name: Build da imagem
     runs-on: ${{ inputs.OS_VERSION }}
     outputs:
-      image:  ${{ steps.build_push_imagem.outputs.image }}
+      image:  ${{ steps.login_ecr.outputs.image }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Configura credenciais da AWS
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -59,10 +61,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ inputs.AWS_REGION }}
       
-      - name: Build, Tag e Push da imagem para repositório AWS ECR
-        id: build_push_imagem
+      - name: Login no repo AWS ECR
+        id: login_ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      
+      - name: Build, tag e push da imagem para repositório AWS ECR
         env:
-          ECR_REGISTRY: ${{ steps.build_push_imagem.outputs.registry }}
+          ECR_REGISTRY: ${{ steps.login_ecr.outputs.registry }}
         run: |
           cd ${{ inputs.WORK_DIR }}
           if [ -z ${{ inputs.TAG_IMAGE }} ] #Verifica se a var TAG-IMAGE é nula
