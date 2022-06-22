@@ -2,11 +2,6 @@ name: Build e Push de imagens docker para escuro
 
 on: 
   workflow_call:
-    outputs:
-      value: 
-        value: ${{ jobs.build.outputs.imagem }}
-        description: "URL da imagem da imagem docker"
-    
     inputs:
       OS_VERSION:
         description: "Versão do sistema operacional"
@@ -74,9 +69,7 @@ jobs:
           then
             docker build -t $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${GITHUB_SHA::8} -f ${{ inputs.DOCKERFILE }} .
             docker push $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${GITHUB_SHA::8}
-            echo "::set-output name=imagem::$ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${GITHUB_SHA::8}"
           else
-            docker build -t $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} -f ${{ inputs.DOCKERFILE }} .
-            docker push $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
-            echo "::set-output name=imagem::$ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}"
+            docker build -t $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.TAG_IMAGE }} -f ${{ inputs.DOCKERFILE }} .
+            docker push $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.TAG_IMAGE }}
           fi
