@@ -76,7 +76,7 @@ jobs:
             docker push $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${GITHUB_SHA::8}
             echo "::set-output name=imagem::$ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${GITHUB_SHA::8}"
           else
-            docker build -t $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} -f ${{ inputs.DOCKERFILE }}
+            docker build -t $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} -f ${{ inputs.DOCKERFILE }} .
             docker push $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
             echo "::set-output name=imagem::$ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}"
           fi
