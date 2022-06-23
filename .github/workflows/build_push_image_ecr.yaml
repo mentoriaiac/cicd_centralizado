@@ -13,11 +13,6 @@ on:
         required: false
         type: string
         default: ""
-      WORK_DIR:
-        description: "Diretório do projeto"
-        required: false
-        type: string
-        default: "."
       ECR_REPOSITORY:
         description: "Nome do repositório ECR"
         required: true
@@ -63,7 +58,6 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login_ecr.outputs.registry }}
         run: |
-          #cd ${{ inputs.WORK_DIR }}
           if [ -z ${{ inputs.TAG_IMAGE }} ] #Verifica se a var TAG-IMAGE é nula
           then
             docker build -t $ECR_REGISTRY/${{ inputs.ECR_REPOSITORY }}:${GITHUB_SHA::8} -f ${{ inputs.DOCKERFILE }} .
