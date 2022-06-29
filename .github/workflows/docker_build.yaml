@@ -60,12 +60,6 @@ jobs:
       - name: Build
         run: |
           docker image build --tag ${{inputs.tag}} .
-#      - name: Salva Policies em arquivo
-#        run: |
-#          echo """${{inputs.trivy_ignore_policy}}""" > ignore_policy.rego
-#      - name: Salva .trivyignore em arquivo
-#        run: |
-#          echo """${{inputs.trivy_ignore}}""" > .trivyignore
       - name: Rodar Scan de vulnerabilidade Trivy
         uses: aquasecurity/trivy-action@master
         with:
@@ -73,10 +67,8 @@ jobs:
           format: 'table'
           exit-code: '1'
           severity: ${{inputs.trivy_severity}}
-#          ignore-policy: ignore_policy.rego
       - name: push da imagem
         if: ${{inputs.push_image}}
         run: |
           docker login --username ${{secrets.docker_user}} --password ${{secrets.docker_password}}
           docker image push ${{inputs.tag}}
-          
