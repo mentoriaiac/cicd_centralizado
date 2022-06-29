@@ -17,11 +17,6 @@ on:
         required: false
         default: v2.9.2
         type: string
-      trivy_ignore_policy:
-        description: "filtro de vulnerabilidades usando linguagem do OPA"
-        required: false
-        default: "package trivy"
-        type: string
       trivy_ignore:
         description: "arquivo .trivyignore"
         required: false
