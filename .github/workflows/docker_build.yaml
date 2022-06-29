@@ -73,7 +73,7 @@ jobs:
           format: 'table'
           exit-code: '1'
           severity: ${{inputs.trivy_severity}}
-          ignore-policy: ignore_policy.rego
+#          ignore-policy: ignore_policy.rego
       - name: push da imagem
         if: ${{inputs.push_image}}
         run: |
