@@ -17,7 +17,7 @@ on:
         required: false
         default: "default"
         type: string
-    secret:
+    secrets:
       AWS_ACCESS_KEY_ID:
         description: "Credencial AWS"
         required: true
