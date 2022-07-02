@@ -17,6 +17,13 @@ on:
         required: false
         default: "default"
         type: string
+    secret:
+      AWS_ACCESS_KEY_ID:
+        description: "Credencial AWS"
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        description: "Credencial AWS"
+        required: true
 
 jobs:
   jobs_terraform:
