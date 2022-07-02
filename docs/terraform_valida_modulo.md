@@ -1,5 +1,5 @@
 # Terraform Valida Módulo
-Github Actions para ser reutilizado nos projetos de Terraform. Faz a validação da sintaxe do código terraform. 
+Github Actions para ser reutilizado nos projetos de Terraform. Faz a validação da sintaxe do código terraform.
 
 - terraform init
 - terraform fmt
@@ -9,11 +9,12 @@ Github Actions para ser reutilizado nos projetos de Terraform. Faz a validação
 ## Inputs
 | Nome | Descrição | Requirida |Default |
 |------|-----------|-----------|--------|
-|`os_version` | Versão do sistema operacional | não | ubuntu-20.04 |
+| `os_version` | Versão do sistema operacional | não | ubuntu-20.04 |
+| `working_directory` | Diretório onde a pipeline irá atuar | não | . |
 
 
-## Utilizando 
-Criar a seguintes estrutura de diretórios: 
+## Utilizando
+Criar a seguintes estrutura de diretórios:
 
 `.github/workflows/<proposito>.yml`
 
@@ -31,8 +32,7 @@ on:
 jobs:
   terraform:
       uses: "mentoriaiac/cicd_centralizado/.github/workflows/terraform_valida_modulo.yaml@v1"
-      with: 
+      with:
         os_version: "ubuntu-20.04"
-      secrets:
-        token: ${{ secrets.TOKEN }}
+        working_directory: "./terraform"
 ```

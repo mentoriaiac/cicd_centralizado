@@ -8,40 +8,47 @@ on:
         required: false
         default: "ubuntu-20.04"
         type: string
-    secrets:
-      token:
-        required: true
+      working_directory:
+        description: "Diretório onde a pipeline irá atuar"
+        required: false
+        default: "."
+        type: string
 
 jobs:
   jobs_terraform:
     name: Terraform workflow
     runs-on: ${{ inputs.os_version }}
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Prepara variavel
-        run: | 
-         export TF_VERSION=$(sed -n '/required_version/p' *.tf | awk '{print $4}' | sed 's/"//g')
+      - name: Lê versão do Terraform
+        id: tf-version
+        run: |
+          TF_VERSION=$(sed -nr 's/\s*required_version\s+=\s+"(.*)"/\1/p' *.tf)
+          echo "::set-output name=version::$TF_VERSION"
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: $TF_VERSION
+          terraform_version: ${{ steps.tf-version.outputs.version }}
+
+      - name: Terraform Version
+        run: terraform version
 
       - name: Terraform Format
-        id: fmt
-        run: terraform fmt -check -diff          
+        run: terraform fmt -check -diff
 
       - name: Terraform Init
-        id: init
         run: terraform init
 
       - name: Terraform Validate
-        id: validate
         run: terraform validate -no-color
 
       - name: Validação do tfsec
-        id: tfsec
         run: |
           docker run --rm -v $PWD:/app -w /app tfsec/tfsec .
