@@ -10,14 +10,8 @@ on:
         type: string
       aws_region:
         description: "Define a região AWS para a configuração das credenciais"
-        required: false
-        default: "us-east-1"
+        required: true
         type: string
-      tf_version:
-        description: "Versão do terraform"
-        required: false
-        type: string
-        default: "1.0.0"
       tf_workspace:
         description: "Define o workspace em que o modulo será executado"
         required: false
@@ -40,10 +34,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ inputs.aws_region }}
 
+      - name: Lê versão do Terraform
+        id: tf-version
+        run: |
+          TF_VERSION=$(sed -nr 's/\s*required_version\s+=\s+"(.*)"/\1/p' *.tf)
+          echo "::set-output name=version::$TF_VERSION"
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: ${{ inputs.tf_version }}
+          terraform_version: ${{ steps.tf-version.outputs.version }}
     
       - name: Terraform Init
         run: terraform init
