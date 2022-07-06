@@ -1,4 +1,4 @@
-name: "Docker Build Scan"
+name: "Docker Build Tag Push"
 
 on:
   workflow_call:
@@ -8,19 +8,19 @@ on:
         required: false
         default: "ubuntu-20.04"
         type: string
+<<<<<<< HEAD
+      tag:
+        description: "Nome da imagem docker"
+=======
       image:
         description: "Nome da imagem docker"
+>>>>>>> e4aa8e46b097f14c6ca3294f57023f86f2f17c78
         required: true
         type: string
       hadolint_version:
         description: "versão do hadolint"
         required: false
         default: v2.9.2
-        type: string
-      trivy_ignore:
-        description: "arquivo .trivyignore"
-        required: false
-        default: ""
         type: string
       trivy_severity:
         description: "nível de severidade para scan"
@@ -41,7 +41,7 @@ on:
         required: false
 jobs:
   docker:
-    name: Docker Build Scan
+    name: Docker Build Tag Push
     runs-on: ${{inputs.os_version}}
     steps:
       - uses: actions/checkout@v3
@@ -67,4 +67,3 @@ jobs:
         run: |
           docker login --username ${{secrets.docker_user}} --password ${{secrets.docker_password}}
           docker image push ${{inputs.tag}}
-
