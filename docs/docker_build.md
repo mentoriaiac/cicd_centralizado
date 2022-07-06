@@ -12,6 +12,7 @@ Github Actions para ser reutilizado nos projetos de Imagem Docker. Faz a process
 | trivy_severity | nível de severidade para scan | não | "CRITICAL,HIGH" | string |
 | push_image | escolha se deve ser feito push da imagem | não | não | boolean |
 
+
 ## Utilizando 
 Criar a seguintes estrutura de diretórios: 
 
