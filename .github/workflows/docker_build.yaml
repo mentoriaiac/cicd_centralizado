@@ -49,17 +49,18 @@ jobs:
             hadolint/hadolint:${{inputs.hadolint_version}} hadolint Dockerfile
       - name: Build
         run: |
-          docker image build --tag ${{inputs.tag}} .
+          docker image build --tag ${{inputs.image}}:$(git rev-parse --short "$GITHUB_SHA") .
       - name: Rodar Scan de vulnerabilidade Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{inputs.tag}}
+          image-ref: ${{inputs.image}}:$(git rev-parse --short "$GITHUB_SHA")
           format: 'table'
           exit-code: '1'
           severity: ${{inputs.trivy_severity}}
-      - name: Push da imagem
+      - name: push da imagem
         if: ${{inputs.push_image}}
         run: |
           docker login --username ${{secrets.docker_user}} --password ${{secrets.docker_password}}
-          docker image push ${{inputs.tag}}
+          docker tag ${{inputs.image}}:$(git rev-parse --short "$GITHUB_SHA")
+          docker image push ${{inputs.image}}:${GITHUB_REF#refs/*/}
 
