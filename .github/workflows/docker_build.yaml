@@ -62,3 +62,4 @@ jobs:
         run: |
           docker login --username ${{secrets.docker_user}} --password ${{secrets.docker_password}}
           docker image push ${{inputs.tag}}
+
