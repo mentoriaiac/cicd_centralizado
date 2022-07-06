@@ -30,8 +30,6 @@ jobs:
     uses: "mentoriaiac/cicd_centralizado/.github/workflows/docker_build.yaml@v1"
     with:
       tag: USUARIO/REPOSITORIO_DOCKER:TAG
-      trivy_ignore: |
-        CVE-2020-36518
       push_image: ${{github.event_name == 'release'}}
     secrets:
       docker_user: ${{secrets.DOCKER_LOGIN}}
