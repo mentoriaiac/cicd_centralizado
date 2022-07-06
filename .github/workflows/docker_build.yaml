@@ -57,7 +57,7 @@ jobs:
           format: 'table'
           exit-code: '1'
           severity: ${{inputs.trivy_severity}}
-      - name: push da imagem
+      - name: Push da imagem
         if: ${{inputs.push_image}}
         run: |
           docker login --username ${{secrets.docker_user}} --password ${{secrets.docker_password}}
