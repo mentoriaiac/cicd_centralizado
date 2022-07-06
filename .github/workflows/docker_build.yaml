@@ -8,13 +8,8 @@ on:
         required: false
         default: "ubuntu-20.04"
         type: string
-<<<<<<< HEAD
-      tag:
-        description: "Nome da imagem docker"
-=======
       image:
         description: "Nome da imagem docker"
->>>>>>> e4aa8e46b097f14c6ca3294f57023f86f2f17c78
         required: true
         type: string
       hadolint_version:
