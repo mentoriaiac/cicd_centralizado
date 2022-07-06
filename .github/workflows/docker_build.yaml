@@ -63,4 +63,3 @@ jobs:
           docker login --username ${{secrets.docker_user}} --password ${{secrets.docker_password}}
           docker tag ${{inputs.image}}:$(git rev-parse --short "$GITHUB_SHA")
           docker image push ${{inputs.image}}:${GITHUB_REF#refs/*/}
-
