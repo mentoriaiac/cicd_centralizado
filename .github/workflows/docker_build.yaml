@@ -61,5 +61,5 @@ jobs:
         if: ${{inputs.push_image}}
         run: |
           docker login --username ${{secrets.docker_user}} --password ${{secrets.docker_password}}
-          docker tag ${{inputs.image}}:$(git rev-parse --short "$GITHUB_SHA")
+          docker tag ${{inputs.image}}:$(git rev-parse --short "$GITHUB_SHA") ${{inputs.image}}:${GITHUB_REF#refs/*/}
           docker image push ${{inputs.image}}:${GITHUB_REF#refs/*/}
