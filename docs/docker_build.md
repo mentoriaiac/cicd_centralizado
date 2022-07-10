@@ -28,7 +28,7 @@ on:
     types: [created]
 jobs:
   docker:
-    uses: "mentoriaiac/cicd_centralizado/.github/workflows/docker_build.yaml@v1"
+    uses: "mentoriaiac/cicd_centralizado/.github/workflows/docker_build.yaml@docker/v1"
     with:
       tag: USUARIO/REPOSITORIO_DOCKER:TAG
       push_image: ${{github.event_name == 'release'}}
