@@ -6,7 +6,6 @@ Github Actions para ser reutilizado nos projetos de Imagem Docker. Faz a process
 | Nome | Descrição | Requirida |Default | Type |
 |------|-----------|-----------|--------|------|
 | image | nome da imagem docker | sim | N/A | string |
-
 | os_version | Versão do sistema operacional | não | ubuntu-20.04 | string |
 | hadolint_version | versão do hadolint | não | v2.9.2 | string |
 | trivy_ignore | arquivo .trivyignore | não | "" | string |
