@@ -30,7 +30,8 @@ jobs:
   docker:
     uses: "mentoriaiac/cicd_centralizado/.github/workflows/docker_build.yaml@docker/v1"
     with:
-      tag: USUARIO/REPOSITORIO_DOCKER:TAG
+      image: USUARIO/REPOSITORIO_DOCKER
+
       push_image: ${{github.event_name == 'release'}}
     secrets:
       docker_user: ${{secrets.DOCKER_LOGIN}}
