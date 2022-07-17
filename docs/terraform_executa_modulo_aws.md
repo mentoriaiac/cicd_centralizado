@@ -34,7 +34,7 @@ jobs:
   terraform:
     uses: "mentoriaiac/cicd_centralizado/.github/workflows/terraform_executa_modulo_aws.yaml@v1"
     with:
-      aws_regio: "us-east-1"
+      aws_region: "us-east-1"
       tf_workspace: "default"
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
