@@ -8,7 +8,7 @@ on:
         required: true
         type: string
     secrets:
-      github_token:
+      token:
         description: "Personal token para leitura/escrita projects github"
         required: true
 
@@ -20,4 +20,4 @@ jobs:
       - uses: actions/add-to-project@v0.3.0
         with:
           project-url: {{ inputs.project_url }}
-          token: ${{ inputs.github_token }}
+          token: ${{ inputs.token }}
