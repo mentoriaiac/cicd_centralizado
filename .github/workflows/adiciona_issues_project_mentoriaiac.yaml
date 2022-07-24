@@ -1,12 +1,16 @@
-name: "Adiciona Issues em Projects GitHub"
-  
+name: "Adiciona Issues em Projects Beta GitHub"
+
 on:
   issues:
     types:
       - opened
+
 jobs:
-  add-issue:
-    uses: "mentoriaiac/cicd_centralizado/.github/workflows/add_issues_projects.yaml@v1"
-    with:
-      project_url: https://github.com/orgs/mentoriaiac/projects/6
-      github_token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+  add-to-project:
+    name: Add issue to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@main
+        with:
+          project-url: https://github.com/orgs/mentoriaiac/projects/6
+          github-token: ${{ secrets.API_TOKEN_GITHUB }}
