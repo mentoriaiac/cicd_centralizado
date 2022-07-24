@@ -22,6 +22,11 @@ on:
         required: false
         default: "CRITICAL,HIGH"
         type: string
+      trivy_exit_code:
+        description: "Saída de erro em caso do trivy encontrar problemas"
+        required: false
+        default: "1"
+        type: string
       push_image:
         description: "escolha se deve ser feito push da imagem"
         required: false
@@ -55,7 +60,7 @@ jobs:
         with:
           image-ref: ${{inputs.image}}:${{ github.sha }}
           format: 'table'
-          exit-code: '1'
+          exit-code: ${{inputs.trivy_exit_code}}
           severity: ${{inputs.trivy_severity}}
       - name: Push da imagem
         if: ${{inputs.push_image}}
