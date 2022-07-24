@@ -1,0 +1,70 @@
+name: "Docker Build Tag Push"
+
+on:
+  workflow_call:
+    inputs:
+      os_version:
+        description: "Versão do sistema operacional"
+        required: false
+        default: "ubuntu-20.04"
+        type: string
+      image:
+        description: "Nome da imagem docker"
+        required: true
+        type: string
+      hadolint_version:
+        description: "versão do hadolint"
+        required: false
+        default: v2.9.2
+        type: string
+      trivy_severity:
+        description: "nível de severidade para scan"
+        required: false
+        default: "CRITICAL,HIGH"
+        type: string
+      trivy_exit_code:
+        description: "Saída de erro em caso do trivy encontrar problemas"
+        required: false
+        default: "1"
+        type: string
+      push_image:
+        description: "escolha se deve ser feito push da imagem"
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      docker_user:
+        description: "usuário do repositório de imagem docker. Obrigatório se push_image for true"
+        required: false
+      docker_password:
+        description: "senha do repositório de imagem docker. Obrigatório se push_image for true"
+        required: false
+jobs:
+  docker:
+    name: Docker Build Tag Push
+    runs-on: ${{inputs.os_version}}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Lint
+        run: |
+          docker container run \
+            --mount type=bind,source=$PWD,target=/repo,readonly \
+            --workdir /repo/ \
+            --interactive \
+            hadolint/hadolint:${{inputs.hadolint_version}} hadolint Dockerfile
+      - name: Build
+        run: |
+          docker image build --tag ${{inputs.image}}:${{ github.sha }} .
+      - name: Rodar Scan de vulnerabilidade Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{inputs.image}}:${{ github.sha }}
+          format: 'table'
+          exit-code: ${{inputs.trivy_exit_code}}
+          severity: ${{inputs.trivy_severity}}
+      - name: Push da imagem
+        if: ${{inputs.push_image}}
+        run: |
+          docker login --username ${{secrets.docker_user}} --password ${{secrets.docker_password}}
+          docker tag ${{inputs.image}}:${{ github.sha }} ${{inputs.image}}:${GITHUB_REF#refs/*/}
+          docker image push ${{inputs.image}}:${GITHUB_REF#refs/*/}
