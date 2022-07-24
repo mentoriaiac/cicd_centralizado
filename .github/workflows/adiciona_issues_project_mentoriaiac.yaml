@@ -10,7 +10,7 @@ jobs:
     name: Add issue to project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@main
+      - uses: actions/add-to-project@v0.3.0
         with:
           project-url: https://github.com/orgs/mentoriaiac/projects/6
           github-token: ${{ secrets.API_TOKEN_GITHUB }}
