@@ -49,11 +49,11 @@ jobs:
             hadolint/hadolint:${{inputs.hadolint_version}} hadolint Dockerfile
       - name: Build
         run: |
-          docker image build --tag ${{inputs.image}}:$(git rev-parse --short "$GITHUB_SHA") .
+          docker image build --tag ${{inputs.image}}:${{ github.sha }} .
       - name: Rodar Scan de vulnerabilidade Trivy
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{inputs.image}}:$(git rev-parse --short "$GITHUB_SHA")
+          image-ref: ${{inputs.image}}:${{ github.sha }}
           format: 'table'
           exit-code: '1'
           severity: ${{inputs.trivy_severity}}
