@@ -20,4 +20,4 @@ jobs:
       - uses: actions/add-to-project@v0.0.5
         with:
           project-url: {{ inputs.project_url }}
-          github-token: ${{ inputs.github-token }}
+          github-token: ${{ secrets.github-token }}
